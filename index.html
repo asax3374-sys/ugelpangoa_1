@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGEL Pangoa – Aula Digital | Redes Neuronales Artificiales</title>
+    <style>
+        /* ===== VARIABLES Y RESET ===== */
+        :root {
+            --verde-bosque: #2E7D32;
+            --verde-oscuro: #1B5E20;
+            --verde-claro: #4CAF50;
+            --crema: #FFF8E1;
+            --crema-oscuro: #F5F0DC;
+            --amarillo: #FFC107;
+            --amarillo-claro: #FFD54F;
+            --amarillo-oscuro: #FF8F00;
+            --texto: #263238;
+            --texto-claro: #546E7A;
+            --blanco: #FFFFFF;
+            --sombra: 0 4px 20px rgba(0,0,0,0.1);
+            --sombra-hover: 0 8px 30px rgba(0,0,0,0.15);
+            --radio: 12px;
+            --transicion: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--crema);
+            color: var(--texto);
+            line-height: 1.7;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, var(--verde-oscuro) 0%, var(--verde-bosque) 50%, var(--verde-claro) 100%);
+            color: var(--blanco);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--amarillo);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--verde-oscuro);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        .header-badge {
+            background: var(--amarillo);
+            color: var(--verde-oscuro);
+            padding: 6px 18px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== NAVEGACIÓN ===== */
+        nav {
+            background: rgba(0,0,0,0.15);
+            padding: 0 40px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 5px;
+            overflow-x: auto;
+        }
+
+        nav a {
+            display: block;
+            color: var(--blanco);
+            text-decoration: none;
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+            transition: var(--transicion);
+            white-space: nowrap;
+        }
+
+        nav a:hover, nav a.active {
+            background: var(--amarillo);
+            color: var(--verde-oscuro);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--verde-oscuro) 0%, var(--verde-bosque) 60%, #388E3C 100%);
+            color: var(--blanco);
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,193,7,0.08) 0%, transparent 70%);
+            animation: pulse-bg 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--amarillo);
+            color: var(--verde-oscuro);
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.92;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transicion);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--amarillo);
+            color: var(--verde-oscuro);
+        }
+
+        .btn-primary:hover {
+            background: var(--amarillo-oscuro);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,193,7,0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: var(--blanco);
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        /* ===== CONTENIDO PRINCIPAL ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* ===== TARJETAS DE RESUMEN ===== */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: -60px auto 50px;
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .summary-card {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            padding: 30px;
+            box-shadow: var(--sombra);
+            text-align: center;
+            transition: var(--transicion);
+            border-top: 4px solid var(--verde-bosque);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--sombra-hover);
+        }
+
+        .summary-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .summary-card h3 {
+            color: var(--verde-bosque);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .summary-card p {
+            color: var(--texto-claro);
+            font-size: 0.9rem;
+        }
+
+        /* ===== SECCIONES ===== */
+        .section {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            padding: 45px;
+            margin-bottom: 35px;
+            box-shadow: var(--sombra);
+            border-left: 5px solid var(--verde-bosque);
+            transition: var(--transicion);
+        }
+
+        .section:hover {
+            box-shadow: var(--sombra-hover);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--crema);
+        }
+
+        .section-number {
+            background: var(--verde-bosque);
+            color: var(--blanco);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            color: var(--verde-oscuro);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .section h3 {
+            color: var(--verde-bosque);
+            font-size: 1.2rem;
+            margin: 25px 0 12px;
+            padding-left: 15px;
+            border-left: 3px solid var(--amarillo);
+        }
+
+        .section p, .section li {
+            color: var(--texto);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .section ul, .section ol {
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        /* ===== CAJA DE INFORMACIÓN ===== */
+        .info-box {
+            background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+            border-radius: var(--radio);
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid var(--verde-bosque);
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #FFF8E1, #FFF3E0);
+            border-left-color: var(--amarillo);
+        }
+
+        .info-box.highlight {
+            background: linear-gradient(135deg, #E0F2F1, #E8F5E9);
+            border-left-color: #00897B;
+        }
+
+        .info-box h4 {
+            color: var(--verde-oscuro);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            color: var(--texto);
+            font-size: 0.95rem;
+        }
+
+        /* ===== FÓRMULA ===== */
+        .formula-box {
+            background: var(--crema-oscuro);
+            border: 2px solid var(--amarillo);
+            border-radius: var(--radio);
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .formula-box .formula {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--verde-oscuro);
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            letter-spacing: 1px;
+        }
+
+        .formula-box .formula-label {
+            font-size: 0.85rem;
+            color: var(--texto-claro);
+        }
+
+        /* ===== DIAGRAMA DE RED NEURONAL (SVG) ===== */
+        .diagram-container {
+            background: linear-gradient(135deg, #FAFAFA, var(--crema));
+            border-radius: var(--radio);
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid #E0E0E0;
+            overflow-x: auto;
+        }
+
+        .diagram-container h4 {
+            color: var(--verde-oscuro);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .nn-svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .nn-svg .neuron {
+            transition: var(--transicion);
+            cursor: pointer;
+        }
+
+        .nn-svg .neuron:hover {
+            filter: brightness(1.15);
+            transform-origin: center;
+        }
+
+        .nn-svg .connection {
+            stroke-opacity: 0.5;
+            transition: var(--transicion);
+        }
+
+        .diagram-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--texto-claro);
+        }
+
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        /* ===== TABS DE FUNCIONES DE ACTIVACIÓN ===== */
+        .tabs {
+            margin: 20px 0;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 22px;
+            background: var(--crema-oscuro);
+            border: 2px solid #E0E0E0;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--texto-claro);
+            transition: var(--transicion);
+        }
+
+        .tab-btn:hover {
+            background: #E8F5E9;
+        }
+
+        .tab-btn.active {
+            background: var(--verde-bosque);
+            color: var(--blanco);
+            border-color: var(--verde-bosque);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--blanco);
+            border: 2px solid #E0E0E0;
+            border-radius: 0 var(--radio) var(--radio) var(--radio);
+            padding: 25px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content .formula {
+            font-family: 'Courier New', monospace;
+            background: var(--crema);
+            padding: 10px 18px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: 600;
+            color: var(--verde-oscuro);
+        }
+
+        .characteristics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .char-item {
+            background: #F5F5F5;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== CÓDIGO PYTHON ===== */
+        .code-block {
+            background: #1E1E1E;
+            border-radius: var(--radio);
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+        }
+
+        .code-header {
+            background: #333;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-header span {
+            color: #9E9E9E;
+            font-size: 0.85rem;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dots span:nth-child(1) { background: #FF5F56; }
+        .code-dots span:nth-child(2) { background: #FFBD2E; }
+        .code-dots span:nth-child(3) { background: #27C93F; }
+
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            color: #CCC;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transicion);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+            color: var(--blanco);
+        }
+
+        .code-body {
+            padding: 25px;
+            overflow-x: auto;
+        }
+
+        .code-body pre {
+            margin: 0;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #D4D4D4;
+            white-space: pre;
+        }
+
+        /* Syntax Highlighting */
+        .kw { color: #569CD6; }
+        .fn { color: #DCDCAA; }
+        .st { color: #CE9178; }
+        .cm { color: #6A9955; }
+        .nb { color: #4EC9B0; }
+        .op { color: #D4D4D4; }
+        .num { color: #B5CEA8; }
+        .var { color: #9CDCFE; }
+
+        /* ===== PROCESO PASO A PASO ===== */
+        .steps {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            left: 18px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--verde-bosque), var(--amarillo));
+            border-radius: 3px;
+        }
+
+        .step {
+            position: relative;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #F9FBF9;
+            border-radius: var(--radio);
+            border: 1px solid #E8F5E9;
+            transition: var(--transicion);
+        }
+
+        .step:hover {
+            background: #F1F8E9;
+            border-color: var(--verde-claro);
+        }
+
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: -40px;
+            top: 20px;
+            width: 32px;
+            height: 32px;
+            background: var(--verde-bosque);
+            color: var(--blanco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(46,125,50,0.3);
+        }
+
+        .step h4 {
+            color: var(--verde-oscuro);
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .step p {
+            color: var(--texto-claro);
+            font-size: 0.93rem;
+            margin: 0;
+        }
+
+        /* ===== CAPAS DE LA RED ===== */
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .layer-card {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            padding: 30px;
+            border: 2px solid;
+            transition: var(--transicion);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .layer-card.input {
+            border-color: #66BB6A;
+        }
+        .layer-card.input::before {
+            background: #66BB6A;
+        }
+
+        .layer-card.hidden {
+            border-color: var(--amarillo);
+        }
+        .layer-card.hidden::before {
+            background: var(--amarillo);
+        }
+
+        .layer-card.output {
+            border-color: #FF7043;
+        }
+        .layer-card.output::before {
+            background: #FF7043;
+        }
+
+        .layer-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--sombra-hover);
+        }
+
+        .layer-card .layer-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .layer-card h4 {
+            color: var(--verde-oscuro);
+            margin-bottom: 10px;
+            font-size: 1.15rem;
+        }
+
+        .layer-card p {
+            color: var(--texto-claro);
+            font-size: 0.93rem;
+        }
+
+        /* ===== TABLA DE ENTRENAMIENTO ===== */
+        .training-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            border-radius: var(--radio);
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .training-table th {
+            background: var(--verde-bosque);
+            color: var(--blanco);
+            padding: 15px 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .training-table td {
+            padding: 14px 20px;
+            font-size: 0.93rem;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .training-table tr:nth-child(even) td {
+            background: #F5F5F5;
+        }
+
+        .training-table tr:hover td {
+            background: #E8F5E9;
+        }
+
+        .training-table .step-num {
+            background: var(--amarillo);
+            color: var(--verde-oscuro);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* ===== SECCIÓN SEGURIDAD ===== */
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .safety-card {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            padding: 25px;
+            border: 1px solid #E0E0E0;
+            transition: var(--transicion);
+        }
+
+        .safety-card:hover {
+            border-color: var(--verde-claro);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .safety-card .safety-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .safety-card h4 {
+            color: var(--verde-oscuro);
+            margin-bottom: 8px;
+        }
+
+        .safety-card p {
+            color: var(--texto-claro);
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESULTADOS ===== */
+        .results-box {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            border-radius: var(--radio);
+            padding: 30px;
+            margin: 20px 0;
+            border: 2px solid var(--verde-claro);
+        }
+
+        .results-box h4 {
+            color: var(--verde-oscuro);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .rec-item {
+            background: var(--blanco);
+            padding: 18px;
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: var(--transicion);
+        }
+
+        .rec-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .rec-item .rec-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .rec-item p {
+            font-size: 0.9rem;
+            color: var(--texto);
+            margin: 0;
+        }
+
+        /* ===== EQUIPOS Y MATERIALES ===== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tool-item {
+            background: var(--crema);
+            padding: 18px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transicion);
+            border: 1px solid transparent;
+        }
+
+        .tool-item:hover {
+            border-color: var(--verde-claro);
+            background: #E8F5E9;
+        }
+
+        .tool-item .tool-icon {
+            font-size: 1.5rem;
+        }
+
+        .tool-item .tool-info h5 {
+            color: var(--verde-oscuro);
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+
+        .tool-item .tool-info p {
+            color: var(--texto-claro);
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, var(--verde-oscuro), #0D3311);
+            color: var(--blanco);
+            padding: 50px 40px 25px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            color: var(--amarillo);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p, .footer-section li {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            padding: 3px 0;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .footer-bottom p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: var(--verde-bosque);
+            color: var(--blanco);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(46,125,50,0.4);
+            transition: var(--transicion);
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            background: var(--verde-oscuro);
+            transform: translateY(-3px);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+
+        /* ===== ANIMACIONES DE ENTRADA ===== */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== TOOLTIP NEURONA ===== */
+        .neuron-tooltip {
+            position: fixed;
+            background: #333;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 2000;
+            max-width: 220px;
+            text-align: center;
+        }
+
+        .neuron-tooltip.show {
+            opacity: 1;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px 20px;
+                text-align: center;
+            }
+
+            nav { padding: 0 10px; }
+
+            nav ul {
+                justify-content: flex-start;
+                padding-bottom: 5px;
+            }
+
+            nav a {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                padding: 50px 20px;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 25px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .summary-cards {
+                margin-top: -40px;
+            }
+
+            .steps {
+                padding-left: 30px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .layers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tooltip para neuronas -->
+    <div class="neuron-tooltip" id="neuronTooltip"></div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-top">
+            <div class="logo-area">
+                <div class="logo-icon">UP</div>
+                <div class="logo-text">
+                    <h1>UGEL Pangoa</h1>
+                    <p>Aula Digital – Educación con Tecnología</p>
+                </div>
+            </div>
+            <span class="header-badge">📘 Módulo de IA</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#neurona">Neurona Artificial</a></li>
+                <li><a href="#capas">Capas de la Red</a></li>
+                <li><a href="#activacion">Funciones de Activación</a></li>
+                <li><a href="#entrenamiento">Entrenamiento</a></li>
+                <li><a href="#diagrama">Diagrama</a></li>
+                <li><a href="#python">Código Python</a></li>
+                <li><a href="#proceso">Proceso</a></li>
+                <li><a href="#seguridad">Seguridad</a></li>
+                <li><a href="#resultados">Resultados</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <span class="hero-tag">🧠 MÓDULO EDUCATIVO</span>
+            <h2>Redes Neuronales Artificiales</h2>
+            <p>Descubre cómo funcionan las redes neuronales: desde la neurona artificial hasta el entrenamiento completo. Un recurso educativo interactivo para estudiantes y docentes.</p>
+            <div class="hero-buttons">
+                <a href="#neurona" class="btn btn-primary">🚀 Comenzar Aprendizaje</a>
+                <a href="#python" class="btn btn-secondary">💻 Ver Código Python</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TARJETAS DE RESUMEN -->
+    <div class="summary-cards">
+        <div class="summary-card animate-in">
+            <div class="icon">🔬</div>
+            <h3>Neurona Artificial</h3>
+            <p>Entradas, pesos, sesgo y función de activación: la unidad básica de procesamiento.</p>
+        </div>
+        <div class="summary-card animate-in">
+            <div class="icon">🏗️</div>
+            <h3>Arquitectura</h3>
+            <p>Capas de entrada, ocultas y de salida organizadas para procesar información.</p>
+        </div>
+        <div class="summary-card animate-in">
+            <div class="icon">⚡</div>
+            <h3>Funciones de Activación</h3>
+            <p>Sigmoide, Tanh y ReLU permiten aprender relaciones no lineales.</p>
+        </div>
+        <div class="summary-card animate-in">
+            <div class="icon">🎯</div>
+            <h3>Entrenamiento</h3>
+            <p>Propagación, error, retropropagación y descenso del gradiente.</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- SECCIÓN 1: NEURONA ARTIFICIAL -->
+        <section class="section animate-in" id="neurona">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <h2>La Neurona Artificial</h2>
+            </div>
+
+            <p>Una <strong>neurona artificial</strong> es la unidad básica de procesamiento en una red neuronal. Está inspirada en las neuronas biológicas del cerebro humano, pero simplificada para operar matemáticamente. Su funcionamiento se puede resumir en tres pasos fundamentales:</p>
+
+            <div class="info-box">
+                <h4>📌 Concepto Clave</h4>
+                <p>La neurona artificial es una función matemática que recibe varias entradas, las procesa y produce una única salida. Es el bloque de construcción fundamental de toda red neuronal.</p>
+            </div>
+
+            <h3>¿Cómo funciona?</h3>
+            <ol>
+                <li><strong>Recibe entradas (x₁, x₂, ..., xₙ):</strong> cada entrada representa un dato o variable del problema. Por ejemplo, en un sistema que predice el rendimiento académico, las entradas podrían ser las horas de estudio, las horas de práctica y la asistencia a clases.</li>
+                <li><strong>Multiplica por pesos (w₁, w₂, ..., wₙ):</strong> cada entrada se multiplica por un peso que indica su importancia relativa. Un peso mayor significa que esa entrada influye más en el resultado.</li>
+                <li><strong>Suma ponderada + sesgo (bias):</strong> se suman todos los productos y se agrega un valor constante llamado sesgo (b), que permite ajustar la salida independientemente de las entradas.</li>
+                <li><strong>Función de activación:</strong> el resultado de la suma pasa por una función de activación que decide si la neurona se «activa» o no y en qué magnitud.</li>
+            </ol>
+
+            <div class="formula-box">
+                <div class="formula-label">Expresión general de una neurona artificial</div>
+                <div class="formula">salida = f( x₁·w₁ + x₂·w₂ + ... + xₙ·wₙ + b )</div>
+                <div class="formula-label">Donde <strong>f</strong> es la función de activación, <strong>w</strong> son los pesos y <strong>b</strong> es el sesgo</div>
+            </div>
+
+            <div class="info-box highlight">
+                <h4>💡 Analogía</h4>
+                <p>Imagina que eres un juez en un concurso de cocina. Cada plato (entrada) recibe una puntuación (peso) según tu criterio. Sumas todas las puntuaciones, agregas un bono por presentación (sesgo), y decides si el plato pasa o no (función de activación). Así trabaja una neurona artificial.</p>
+            </div>
+
+            <h3>Componentes en detalle</h3>
+            <ul>
+                <li><strong>Entradas (x):</strong> son los valores numéricos que llegan a la neurona. Pueden venir de los datos originales o de la salida de otras neuronas en capas anteriores.</li>
+                <li><strong>Pesos (w):</strong> son valores que se ajustan durante el aprendizaje. Determinan cuánto influye cada entrada en la salida. Inicialmente se asignan valores pequeños aleatorios.</li>
+                <li><strong>Sesgo (b):</strong> es un valor constante que se suma a la combinación ponderada. Permite que la neurona produzca una salida distinta de cero incluso cuando todas las entradas son cero.</li>
+                <li><strong>Función de activación (f):</strong> transforma la suma ponderada en una salida útil. Sin ella, la red sería equivalente a una simple regresión lineal, sin importar cuántas capas tenga.</li>
+            </ul>
+        </section>
+
+        <!-- SECCIÓN 2: CAPAS DE LA RED -->
+        <section class="section animate-in" id="capas">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <h2>Capas de la Red Neuronal</h2>
+            </div>
+
+            <p>Una red neuronal se organiza en <strong>capas</strong>, cada una con un rol específico. Los datos fluyen desde la capa de entrada, pasan por una o más capas ocultas, y llegan a la capa de salida. Esta organización permite que la red aprenda patrones cada vez más complejos.</p>
+
+            <div class="layers-grid">
+                <div class="layer-card input">
+                    <div class="layer-icon">📥</div>
+                    <h4>Capa de Entrada</h4>
+                    <p>Recibe los datos originales del problema y <strong>no realiza cálculos</strong>. Cada neurona representa una variable o característica. Por ejemplo, si el problema tiene tres variables (horas de estudio, horas de práctica y número de ejercicios resueltos), la capa de entrada tendrá tres neuronas.</p>
+                    <p style="margin-top:10px; font-size:0.85rem; color:#666;">Su función es pasar los datos tal cual a la siguiente capa.</p>
+                </div>
+                <div class="layer-card hidden">
+                    <div class="layer-icon">⚙️</div>
+                    <h4>Capas Ocultas</h4>
+                    <p>Procesan la información recibida y <strong>detectan patrones</strong>. Cada neurona aplica pesos, un sesgo y una función de activación. Una red puede tener una o varias capas ocultas; a más capas, mayor capacidad para aprender relaciones complejas. Esto se conoce como <strong>aprendizaje profundo (deep learning)</strong>.</p>
+                    <p style="margin-top:10px; font-size:0.85rem; color:#666;">Son el «cerebro» de la red y donde ocurre la mayor parte del aprendizaje.</p>
+                </div>
+                <div class="layer-card output">
+                    <div class="layer-icon">📤</div>
+                    <h4>Capa de Salida</h4>
+                    <p>Entrega el <strong>resultado final</strong> de la red. Si es un problema de regresión, produce un valor numérico (por ejemplo, una nota predicha). Si es de clasificación, produce una clase o probabilidad (por ejemplo, «aprobado» o «desaprobado»).</p>
+                    <p style="margin-top:10px; font-size:0.85rem; color:#666;">El número de neuronas depende de las posibles respuestas del problema.</p>
+                </div>
+            </div>
+
+            <h3>Conexiones y Pesos</h3>
+            <p>Cada neurona de una capa está conectada con todas las neuronas de la capa siguiente. Cada conexión tiene un <strong>peso</strong> que indica la importancia de esa información. Los pesos se inician con valores pequeños aleatorios y se ajustan durante el entrenamiento mediante el proceso de retropropagación.</p>
+
+            <div class="info-box warning">
+                <h4>⚠️ Importante</h4>
+                <p>Si todos los pesos fueran iguales, todas las neuronas producirían la misma salida y la red no podría aprender. Por eso se inicializan con valores aleatorios diferentes.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: FUNCIONES DE ACTIVACIÓN -->
+        <section class="section animate-in" id="activacion">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <h2>Funciones de Activación</h2>
+            </div>
+
+            <p>Las funciones de activación son esenciales porque permiten a la red aprender <strong>relaciones no lineales</strong>. Sin ellas, una red neuronal con múltiples capas se comportaría igual que una simple regresión lineal. A continuación se describen las tres funciones más utilizadas:</p>
+
+            <div class="tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showTab('sigmoid')">Sigmoide</button>
+                    <button class="tab-btn" onclick="showTab('tanh')">Tanh</button>
+                    <button class="tab-btn" onclick="showTab('relu')">ReLU</button>
+                </div>
+
+                <div class="tab-content active" id="sigmoid">
+                    <h4 style="color: var(--verde-oscuro); margin-bottom: 12px;">Función Sigmoide</h4>
+                    <p>Transforma cualquier valor en un número entre <strong>0 y 1</strong>, lo que facilita interpretar la salida como una probabilidad. Es muy utilizada en problemas de clasificación binaria (sí/no, verdadero/falso).</p>
+                    <div class="formula">σ(x) = 1 / (1 + e⁻ˣ)</div>
+                    <div class="characteristics">
+                        <div class="char-item">📊 Rango: (0, 1)</div>
+                        <div class="char-item">🎯 Uso: clasificación binaria</div>
+                        <div class="char-item">📈 Curva en forma de S</div>
+                        <div class="char-item">⚠️ Puede causar desvanecimiento del gradiente</div>
+                    </div>
+                    <p style="margin-top:15px;">Cuando <em>x</em> es muy grande, la salida se acerca a 1. Cuando <em>x</em> es muy negativo, se acerca a 0. Esto la hace ideal para decidir entre dos opciones.</p>
+                </div>
+
+                <div class="tab-content" id="tanh">
+                    <h4 style="color: var(--verde-oscuro); margin-bottom: 12px;">Función Tangente Hiperbólica (Tanh)</h4>
+                    <p>Similar a la sigmoide, pero su rango va de <strong>-1 a 1</strong>. Al incluir valores negativos, permite que la red represente datos que pueden ser tanto positivos como negativos. Es útil en capas ocultas.</p>
+                    <div class="formula">tanh(x) = (eˣ - e⁻ˣ) / (eˣ + e⁻ˣ)</div>
+                    <div class="characteristics">
+                        <div class="char-item">📊 Rango: (-1, 1)</div>
+                        <div class="char-item">🎯 Uso: capas ocultas</div>
+                        <div class="char-item">📈 Centrada en cero</div>
+                        <div class="char-item">⚠️ También puede desvanecer gradientes</div>
+                    </div>
+                    <p style="margin-top:15px;">Al estar centrada en cero, facilita el aprendizaje en comparación con la sigmoide, ya que las salidas tienen media cero y los gradientes fluyen mejor.</p>
+                </div>
+
+                <div class="tab-content" id="relu">
+                    <h4 style="color: var(--verde-oscuro); margin-bottom: 12px;">Función ReLU (Rectified Linear Unit)</h4>
+                    <p>Devuelve <strong>cero si la entrada es negativa</strong> y <strong>el mismo valor si es positiva</strong>. Es la función más usada en redes profundas porque es rápida de calcular y no sufre tanto del problema del desvanecimiento del gradiente.</p>
+                    <div class="formula">ReLU(x) = max(0, x)</div>
+                    <div class="characteristics">
+                        <div class="char-item">📊 Rango: [0, ∞)</div>
+                        <div class="char-item">🎯 Uso: redes profundas</div>
+                        <div class="char-item">⚡ Rápida de calcular</div>
+                        <div class="char-item">⚠️ Puede «morir» si siempre da 0</div>
+                    </div>
+                    <p style="margin-top:15px;">Su simplicidad la hace extremadamente eficiente. Si <em>x > 0</em>, la salida es <em>x</em>. Si <em>x ≤ 0</em>, la salida es 0. Existen variantes como Leaky ReLU que permiten un pequeño valor negativo para evitar neuronas «muertas».</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: ENTRENAMIENTO -->
+        <section class="section animate-in" id="entrenamiento">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <h2>Proceso de Entrenamiento</h2>
+            </div>
+
+            <p>El entrenamiento de una red neuronal es el proceso mediante el cual la red <strong>aprende a hacer predicciones precisas</strong>. Consiste en ajustar repetidamente los pesos y sesgos para minimizar el error entre la predicción y el valor real. Este proceso se repite muchas veces (épocas) hasta que la red alcanza un nivel de precisión aceptable.</p>
+
+            <table class="training-table">
+                <thead>
+                    <tr>
+                        <th>Paso</th>
+                        <th>Nombre</th>
+                        <th>Descripción detallada</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="step-num">1</span></td>
+                        <td><strong>Propagación hacia adelante</strong></td>
+                        <td>Los datos de entrada avanzan capa por capa. Cada neurona calcula su suma ponderada, aplica la función de activación y envía el resultado a la siguiente capa. Al final, la capa de salida produce una predicción.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-num">2</span></td>
+                        <td><strong>Cálculo del error</strong></td>
+                        <td>Se compara la predicción de la red con el valor real esperado. Se usa una función de pérdida (como el error cuadrático medio o la entropía cruzada) para medir qué tan lejos está la predicción del valor correcto.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-num">3</span></td>
+                        <td><strong>Retropropagación</strong></td>
+                        <td>El error se envía hacia atrás por la red, desde la salida hasta la entrada. Se calcula cuánto contribuyó cada peso al error total usando derivadas parciales (la regla de la cadena del cálculo diferencial).</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-num">4</span></td>
+                        <td><strong>Descenso del gradiente</strong></td>
+                        <td>Se actualizan los pesos en la dirección que reduce el error. La magnitud del ajuste depende de la tasa de aprendizaje: si es muy grande, los cambios son bruscos; si es muy pequeña, el aprendizaje es lento.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h4>🔄 Ciclo de Entrenamiento</h4>
+                <p>Estos cuatro pasos se repiten muchas veces. Cada repetición completa sobre todos los datos se llama <strong>época</strong>. Con cada época, los pesos se ajustan un poco más y el error va disminuyendo. El entrenamiento se detiene cuando el error es suficientemente bajo o cuando dejar de mejorar.</p>
+            </div>
+
+            <div class="info-box warning">
+                <h4>📝 Nota sobre la tasa de aprendizaje</h4>
+                <p>La tasa de aprendizaje (learning rate) es un hiperparámetro crucial. Un valor de <strong>0.01</strong> es un buen punto de partida para muchos problemas. Si la red no aprende, se puede aumentar; si oscila sin converger, se debe reducir.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: DIAGRAMA INTERACTIVO -->
+        <section class="section animate-in" id="diagrama">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <h2>Diagrama de la Red Neuronal</h2>
+            </div>
+
+            <p>A continuación se muestra un esquema interactivo de una red neuronal con <strong>2 neuronas de entrada</strong>, <strong>3 neuronas ocultas</strong> y <strong>1 neurona de salida</strong>. Pasa el cursor sobre cada neurona para ver más información.</p>
+
+            <div class="diagram-container">
+                <h4>Red Neuronal: 2 → 3 → 1</h4>
+                <svg class="nn-svg" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Conexiones entrada → oculta -->
+                    <line class="connection" x1="150" y1="140" x2="350" y2="80" stroke="#4CAF50" stroke-width="2"/>
+                    <line class="connection" x1="150" y1="140" x2="350" y2="200" stroke="#4CAF50" stroke-width="2.5"/>
+                    <line class="connection" x1="150" y1="140" x2="350" y2="320" stroke="#4CAF50" stroke-width="1.5"/>
+                    <line class="connection" x1="150" y1="260" x2="350" y2="80" stroke="#4CAF50" stroke-width="1.5"/>
+                    <line class="connection" x1="150" y1="260" x2="350" y2="200" stroke="#4CAF50" stroke-width="2"/>
+                    <line class="connection" x1="150" y1="260" x2="350" y2="320" stroke="#4CAF50" stroke-width="2.5"/>
+
+                    <!-- Conexiones oculta → salida -->
+                    <line class="connection" x1="350" y1="80" x2="550" y2="200" stroke="#FF7043" stroke-width="2.5"/>
+                    <line class="connection" x1="350" y1="200" x2="550" y2="200" stroke="#FF7043" stroke-width="2"/>
+                    <line class="connection" x1="350" y1="320" x2="550" y2="200" stroke="#FF7043" stroke-width="1.5"/>
+
+                    <!-- Etiquetas de peso -->
+                    <text x="230" y="100" fill="#666" font-size="11" font-style="italic">w₁₁</text>
+                    <text x="240" y="165" fill="#666" font-size="11" font-style="italic">w₁₂</text>
+                    <text x="255" y="245" fill="#666" font-size="11" font-style="italic">w₁₃</text>
+                    <text x="230" y="170" fill="#666" font-size="11" font-style="italic">w₂₁</text>
+                    <text x="240" y="225" fill="#666" font-size="11" font-style="italic">w₂₂</text>
+                    <text x="255" y="295" fill="#666" font-size="11" font-style="italic">w₂₃</text>
+
+                    <text x="440" y="130" fill="#666" font-size="11" font-style="italic">v₁</text>
+                    <text x="455" y="195" fill="#666" font-size="11" font-style="italic">v₂</text>
+                    <text x="440" y="268" fill="#666" font-size="11" font-style="italic">v₃</text>
+
+                    <!-- Capa de Entrada -->
+                    <circle class="neuron" cx="150" cy="140" r="35" fill="#66BB6A" stroke="#388E3C" stroke-width="3"
+                            data-tooltip="Entrada x₁: recibe la primera variable, como 'horas de estudio'."/>
+                    <text x="150" y="145" text-anchor="middle" fill="white" font-weight="bold" font-size="14">x₁</text>
+
+                    <circle class="neuron" cx="150" cy="260" r="35" fill="#66BB6A" stroke="#388E3C" stroke-width="3"
+                            data-tooltip="Entrada x₂: recibe la segunda variable, como 'horas de práctica'."/>
+                    <text x="150" y="265" text-anchor="middle" fill="white" font-weight="bold" font-size="14">x₂</text>
+
+                    <!-- Capa Oculta -->
+                    <circle class="neuron" cx="350" cy="80" r="35" fill="#FFC107" stroke="#FF8F00" stroke-width="3"
+                            data-tooltip="Neurona oculta h₁: calcula z = x₁·w₁₁ + x₂·w₂₁ + b₁ y aplica la función de activación."/>
+                    <text x="350" y="85" text-anchor="middle" fill="#333" font-weight="bold" font-size="14">h₁</text>
+
+                    <circle class="neuron" cx="350" cy="200" r="35" fill="#FFC107" stroke="#FF8F00" stroke-width="3"
+                            data-tooltip="Neurona oculta h₂: detecta patrones combinando las entradas con sus propios pesos y sesgo."/>
+                    <text x="350" y="205" text-anchor="middle" fill="#333" font-weight="bold" font-size="14">h₂</text>
+
+                    <circle class="neuron" cx="350" cy="320" r="35" fill="#FFC107" stroke="#FF8F00" stroke-width="3"
+                            data-tooltip="Neurona oculta h₃: procesa una combinación diferente de las entradas para captar otros patrones."/>
+                    <text x="350" y="325" text-anchor="middle" fill="#333" font-weight="bold" font-size="14">h₃</text>
+
+                    <!-- Capa de Salida -->
+                    <circle class="neuron" cx="550" cy="200" r="35" fill="#FF7043" stroke="#E64A19" stroke-width="3"
+                            data-tooltip="Salida ŷ: combina h₁, h₂ y h₃ con los pesos v₁, v₂, v₃ para dar la predicción final."/>
+                    <text x="550" y="205" text-anchor="middle" fill="white" font-weight="bold" font-size="14">ŷ</text>
+
+                    <!-- Etiquetas de capas -->
+                    <text x="150" y="370" text-anchor="middle" fill="#388E3C" font-weight="bold" font-size="13">ENTRADA</text>
+                    <text x="350" y="370" text-anchor="middle" fill="#FF8F00" font-weight="bold" font-size="13">OCULTA</text>
+                    <text x="550" y="370" text-anchor="middle" fill="#E64A19" font-weight="bold" font-size="13">SALIDA</text>
+
+                    <!-- Flechas de flujo -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#999"/>
+                        </marker>
+                    </defs>
+                    <line x1="50" y1="200" x2="100" y2="200" stroke="#999" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <text x="40" y="195" fill="#999" font-size="11">datos</text>
+                    <line x1="600" y1="200" x2="660" y2="200" stroke="#999" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <text x="620" y="195" fill="#999" font-size="11">predicción</text>
+                </svg>
+
+                <div class="diagram-legend">
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #66BB6A;"></div>
+                        Capa de Entrada
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #FFC107;"></div>
+                        Capa Oculta
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #FF7043;"></div>
+                        Capa de Salida
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #999; width: 30px; height: 3px; border-radius: 2px;"></div>
+                        Conexión (peso)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6: CÓDIGO PYTHON -->
+        <section class="section animate-in" id="python">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <h2>Ejemplo en Python</h2>
+            </div>
+
+            <p>A continuación se presenta un ejemplo funcional de una red neuronal sencilla implementada <strong>desde cero con Python</strong>. La red tiene 2 entradas, 3 neuronas ocultas y 1 salida, igual que el diagrama anterior. Se usa la función sigmoide como activación.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span>red_neuronal.py</span>
+                    <button class="copy-btn" onclick="copyCode()">📋 Copiar</button>
+                </div>
+                <div class="code-body">
+                    <pre id="pythonCode"><span class="cm"># ==============================================</span>
+<span class="cm"># Red Neuronal Artificial – Ejemplo educativo</span>
+<span class="cm"># UGEL Pangoa – Aula Digital</span>
+<span class="cm"># Estructura: 2 entradas → 3 ocultas → 1 salida</span>
+<span class="cm"># ==============================================</span>
+
+<span class="kw">import</span> <span class="nb">math</span>
+
+<span class="cm"># --- Función de activación: Sigmoide ---</span>
+<span class="kw">def</span> <span class="fn">sigmoide</span>(<span class="var">x</span>):
+    <span class="st">"""Transforma un valor en un número entre 0 y 1."""</span>
+    <span class="kw">return</span> <span class="num">1</span> / (<span class="num">1</span> + <span class="nb">math</span>.exp(-<span class="var">x</span>))
+
+<span class="cm"># --- Datos de entrada ---</span>
+<span class="cm"># Ejemplo: x1 = horas de estudio, x2 = horas de práctica</span>
+<span class="var">x1</span> = <span class="num">0.5</span>
+<span class="var">x2</span> = <span class="num">0.8</span>
+
+<span class="cm"># --- Pesos de la capa oculta (2 entradas → 3 neuronas) ---</span>
+<span class="var">w</span> = [
+    [<span class="num">0.4</span>, <span class="num">0.3</span>],   <span class="cm"># pesos hacia h1</span>
+    [<span class="num">0.2</span>, <span class="num">0.7</span>],   <span class="cm"># pesos hacia h2</span>
+    [<span class="num">0.5</span>, <span class="num">0.1</span>]    <span class="cm"># pesos hacia h3</span>
+]
+
+<span class="cm"># --- Sesgos de la capa oculta ---</span>
+<span class="var">b_oculta</span> = [<span class="num">0.1</span>, <span class="num">-0.2</span>, <span class="num">0.3</span>]
+
+<span class="cm"># --- Pesos de la capa de salida (3 neuronas → 1 salida) ---</span>
+<span class="var">v</span> = [<span class="num">0.6</span>, <span class="num">0.4</span>, <span class="num">0.5</span>]
+
+<span class="cm"># --- Sesgo de la capa de salida ---</span>
+<span class="var">b_salida</span> = <span class="num">0.2</span>
+
+<span class="cm"># ==============================</span>
+<span class="cm"># PROPAGACIÓN HACIA ADELANTE</span>
+<span class="cm"># ==============================</span>
+
+<span class="cm"># Paso 1: Calcular la salida de cada neurona oculta</span>
+<span class="var">h</span> = []
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="nb">range</span>(<span class="num">3</span>):
+    <span class="var">z</span> = <span class="var">w</span>[<span class="var">i</span>][<span class="num">0</span>] * <span class="var">x1</span> + <span class="var">w</span>[<span class="var">i</span>][<span class="num">1</span>] * <span class="var">x2</span> + <span class="var">b_oculta</span>[<span class="var">i</span>]
+    <span class="var">h</span>.append(<span class="fn">sigmoide</span>(<span class="var">z</span>))
+    <span class="nb">print</span>(<span class="st">f"Neurona oculta h{i+1}: z = {z:.4f}, salida = {h[i]:.4f}"</span>)
+
+<span class="cm"># Paso 2: Calcular la salida final</span>
+<span class="var">z_salida</span> = <span class="nb">sum</span>(<span class="var">v</span>[<span class="var">i</span>] * <span class="var">h</span>[<span class="var">i</span>] <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="nb">range</span>(<span class="num">3</span>)) + <span class="var">b_salida</span>
+<span class="var">prediccion</span> = <span class="fn">sigmoide</span>(<span class="var">z_salida</span>)
+
+<span class="nb">print</span>(<span class="st">f"\nSuma ponderada de salida: {z_salida:.4f}"</span>)
+<span class="nb">print</span>(<span class="st">f"Predicción final (sigmoide): {prediccion:.4f}"</span>)
+<span class="nb">print</span>(<span class="st">f"\nInterpretación: La red predice un valor de {prediccion:.2%}"</span>)</pre>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📋 Salida esperada del programa</h4>
+                <p style="font-family: monospace; font-size: 0.9rem; line-height: 1.8;">
+                    Neurona oculta h1: z = 0.5400, salida = 0.6318<br>
+                    Neurona oculta h2: z = 0.4600, salida = 0.6130<br>
+                    Neurona oculta h3: z = 0.6300, salida = 0.6528<br><br>
+                    Suma ponderada de salida: 1.0498<br>
+                    Predicción final (sigmoide): 0.7408<br><br>
+                    Interpretación: La red predice un valor de 74.08%
+                </p>
+            </div>
+
+            <div class="info-box highlight">
+                <h4>🧪 Experimenta</h4>
+                <p>Prueba cambiar los valores de <code>x1</code> y <code>x2</code>, los pesos o los sesgos para ver cómo cambia la predicción. Así entenderás mejor cómo influye cada componente en el resultado final de la red.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 7: PROCESO DETALLADO -->
+        <section class="section animate-in" id="proceso">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <h2>Proceso de Ejecución del Proyecto</h2>
+            </div>
+
+            <p>El desarrollo del módulo educativo siguió una secuencia lógica de <strong>13 pasos</strong>, desde el análisis inicial hasta la entrega del proyecto completo:</p>
+
+            <div class="steps">
+                <div class="step" data-step="1">
+                    <h4>Análisis de los requerimientos</h4>
+                    <p>Se identificaron los contenidos solicitados: estructura, componentes y funcionamiento de una red neuronal artificial. Se definió que el módulo debía mantener el diseño de la página (verde bosque, crema y amarillo), con lenguaje claro y ejemplos sencillos.</p>
+                </div>
+                <div class="step" data-step="2">
+                    <h4>Recopilación y organización de la información</h4>
+                    <p>Se consultaron fuentes confiables sobre inteligencia artificial y aprendizaje automático. El contenido se dividió en cinco partes: neurona artificial, capas, conexiones y pesos, funciones de activación y entrenamiento.</p>
+                </div>
+                <div class="step" data-step="3">
+                    <h4>Estudio de la neurona artificial</h4>
+                    <p>Se explicó que una neurona recibe varias entradas, cada una multiplicada por un peso. Se suman los resultados, se agrega un sesgo (bias), y el valor obtenido pasa por una función de activación que produce la salida.</p>
+                </div>
+                <div class="step" data-step="4">
+                    <h4>Descripción de la capa de entrada</h4>
+                    <p>Se indicó que recibe los datos originales del problema y no realiza cálculos. Cada neurona de esta capa representa una variable, por ejemplo horas de práctica.</p>
+                </div>
+                <div class="step" data-step="5">
+                    <h4>Descripción de las capas ocultas</h4>
+                    <p>Se explicó que procesan la información recibida y detectan patrones. Una red puede tener una o varias capas ocultas; a más capas, mayor capacidad para aprender relaciones complejas (aprendizaje profundo).</p>
+                </div>
+                <div class="step" data-step="6">
+                    <h4>Descripción de la capa de salida</h4>
+                    <p>Se indicó que entrega el resultado final de la red, diferenciando entre un valor numérico (regresión) y una categoría o probabilidad (clasificación).</p>
+                </div>
+                <div class="step" data-step="7">
+                    <h4>Explicación de conexiones, pesos y funciones de activación</h4>
+                    <p>Se explicó que cada conexión tiene un peso que indica la importancia de la información, y se describieron las funciones sigmoide, tanh y ReLU, explicando para qué sirve cada una.</p>
+                </div>
+                <div class="step" data-step="8">
+                    <h4>Explicación del entrenamiento</h4>
+                    <p>Se detallaron los cuatro pasos: propagación hacia adelante, cálculo del error, retropropagación y descenso del gradiente para ajustar los pesos en cada repetición.</p>
+                </div>
+                <div class="step" data-step="9">
+                    <h4>Elaboración del diagrama de la red</h4>
+                    <p>Se dibujó un esquema SVG interactivo con círculos (neuronas) y líneas (conexiones) para una red de 2 entradas, 3 neuronas ocultas y 1 salida, usando los colores de la página.</p>
+                </div>
+                <div class="step" data-step="10">
+                    <h4>Implementación del ejemplo en Python</h4>
+                    <p>Se definieron los datos de entrada, los pesos y los sesgos. Se programó la función de activación y el cálculo de la salida capa por capa, probando con datos de ejemplo.</p>
+                </div>
+                <div class="step" data-step="11">
+                    <h4>Integración en la página web</h4>
+                    <p>Se creó la sección del módulo con título, explicaciones, diagrama y código. Se aplicaron los mismos estilos para mantener una presentación uniforme.</p>
+                </div>
+                <div class="step" data-step="12">
+                    <h4>Verificación de resultados</h4>
+                    <p>Se revisó la ortografía, la coherencia de las explicaciones, que el código Python se ejecutara sin errores y que las imágenes y enlaces funcionaran correctamente.</p>
+                </div>
+                <div class="step" data-step="13">
+                    <h4>Preparación y entrega del proyecto</h4>
+                    <p>Se organizaron los códigos, las imágenes y las instrucciones. Se comprimió todo en un archivo ZIP, incluyendo la versión de la página en un solo archivo HTML.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 8: EQUIPOS Y MATERIALES -->
+        <section class="section animate-in" id="equipos">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <h2>Equipos, Herramientas y Materiales</h2>
+            </div>
+
+            <p>A continuación se listan todos los recursos utilizados para el desarrollo del módulo educativo:</p>
+
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <span class="tool-icon">🖥️</span>
+                    <div class="tool-info">
+                        <h5>Computadora de escritorio</h5>
+                        <p>Con monitor, teclado y mouse</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">🌐</span>
+                    <div class="tool-info">
+                        <h5>Conexión a internet</h5>
+                        <p>Consulta y publicación</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">📝</span>
+                    <div class="tool-info">
+                        <h5>Editor de código</h5>
+                        <p>Crear y modificar archivos</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">🏗️</span>
+                    <div class="tool-info">
+                        <h5>HTML</h5>
+                        <p>Estructura del contenido</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">🎨</span>
+                    <div class="tool-info">
+                        <h5>CSS</h5>
+                        <p>Estilos, colores y animaciones</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">⚡</span>
+                    <div class="tool-info">
+                        <h5>JavaScript</h5>
+                        <p>Interacciones y diagrama</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">🐍</span>
+                    <div class="tool-info">
+                        <h5>Python 3</h5>
+                        <p>Ejemplo de red neuronal</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">📦</span>
+                    <div class="tool-info">
+                        <h5>Archivo ZIP</h5>
+                        <p>Entrega del proyecto completo</p>
+                    </div>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon">🖼️</span>
+                    <div class="tool-info">
+                        <h5>Materiales digitales</h5>
+                        <p>Imágenes JPG, iconos SVG</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 9: SEGURIDAD -->
+        <section class="section animate-in" id="seguridad">
+            <div class="section-header">
+                <div class="section-number">9</div>
+                <h2>Seguridad e Higiene Industrial/Ambiental</h2>
+            </div>
+
+            <p>Durante la ejecución del proyecto se aplicaron las siguientes medidas de seguridad, salud en el trabajo y cuidado ambiental:</p>
+
+            <div class="safety-grid">
+                <div class="safety-card">
+                    <div class="safety-icon">🔍</div>
+                    <h4>ATS – Análisis de Trabajo Seguro</h4>
+                    <p>Se identificaron los riesgos de cables desordenados, conexiones eléctricas deterioradas, posturas inadecuadas y uso prolongado de la pantalla. Como medidas de control, se ordenaron los cables, se revisaron las conexiones y se ajustó la altura de la silla y del monitor.</p>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-icon">💬</div>
+                    <h4>Charla de 5 Minutos</h4>
+                    <p>Se trató el orden del puesto de trabajo, el cuidado de los equipos, la postura correcta al digitar y la importancia de las pausas activas cada cierto tiempo para evitar la fatiga visual y muscular.</p>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-icon">🛡️</div>
+                    <h4>SST – Seguridad y Salud en el Trabajo</h4>
+                    <p>Se mantuvo el área limpia y ventilada, se evitaron los líquidos cerca de los equipos y se comunicó cualquier falla eléctrica antes de continuar trabajando para prevenir accidentes.</p>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-icon">🌿</div>
+                    <h4>SGA – Sistema de Gestión Ambiental</h4>
+                    <p>Se priorizó la entrega digital, se evitaron impresiones innecesarias y se apagaron los equipos al terminar la jornada para ahorrar energía y reducir el impacto ambiental.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 10: RESULTADOS Y RECOMENDACIONES -->
+        <section class="section animate-in" id="resultados">
+            <div class="section-header">
+                <div class="section-number">10</div>
+                <h2>Resultados y Recomendaciones</h2>
+            </div>
+
+            <div class="results-box">
+                <h4>✅ Objetivo Logrado</h4>
+                <p>Se describió la estructura de una red neuronal artificial de forma clara y ordenada, explicando sus capas, neuronas, pesos, funciones de activación y proceso de entrenamiento. También se dejó un ejemplo funcional en Python y un diagrama interactivo que ayuda a entender el tema. El módulo quedó integrado en la página <strong>«UGEL Pangoa – Aula Digital»</strong> y listo para ser usado como recurso educativo.</p>
+            </div>
+
+            <h3>Recomendaciones</h3>
+            <div class="recommendations">
+                <div class="rec-item">
+                    <span class="rec-icon">🔄</span>
+                    <p><strong>Actualizar periódicamente:</strong> la inteligencia artificial evoluciona rápido. Es importante revisar y actualizar el contenido para que se mantenga vigente y relevante.</p>
+                </div>
+                <div class="rec-item">
+                    <span class="rec-icon">🧪</span>
+                    <p><strong>Probar con datos nuevos:</strong> antes de usar el código en clase, probarlo con diferentes valores de entrada para asegurar que los resultados tengan sentido.</p>
+                </div>
+                <div class="rec-item">
+                    <span class="rec-icon">💾</span>
+                    <p><strong>Copias de respaldo:</strong> guardar copias del proyecto en la nube y en un dispositivo externo para evitar la pérdida de información.</p>
+                </div>
+                <div class="rec-item">
+                    <span class="rec-icon">📈</span>
+                    <p><strong>Ampliar el módulo:</strong> agregar ejemplos de redes más grandes y actividades prácticas para que los estudiantes practiquen y profundicen en el tema.</p>
+                </div>
+                <div class="rec-item">
+                    <span class="rec-icon">🧘</span>
+                    <p><strong>Pausas activas:</strong> mantener las buenas prácticas de seguridad y realizar pausas activas durante el trabajo con computadora para cuidar la salud.</p>
+                </div>
+                <div class="rec-item">
+                    <span class="rec-icon">👥</span>
+                    <p><strong>Retroalimentación:</strong> recoger opiniones de estudiantes y docentes para mejorar el contenido y la experiencia de aprendizaje del módulo.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>UGEL Pangoa – Aula Digital</h4>
+                <p>Plataforma educativa que integra tecnología e inteligencia artificial para fortalecer el aprendizaje de estudiantes y docentes de la provincia de Pangoa, Junín, Perú.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contenido del Módulo</h4>
+                <ul>
+                    <li>🔬 La Neurona Artificial</li>
+                    <li>🏗️ Capas de la Red</li>
+                    <li>⚡ Funciones de Activación</li>
+                    <li>🎯 Proceso de Entrenamiento</li>
+                    <li>💻 Ejemplo en Python</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Operaciones del PEA</h4>
+                <ul>
+                    <li>📌 Describir estructura de red neuronal</li>
+                    <li>📌 Identificar capas</li>
+                    <li>📌 Explicar neurona artificial</li>
+                    <li>📌 Implementar ejemplo en Python</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 UGEL Pangoa – Aula Digital. Módulo de Redes Neuronales Artificiales. Formación Práctica en Empresa.</p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN SCROLL TO TOP -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">▲</button>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // ===== TABS =====
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ===== COPIAR CÓDIGO =====
+        function copyCode() {
+            const code = document.getElementById('pythonCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '✅ Copiado';
+                setTimeout(() => btn.textContent = '📋 Copiar', 2000);
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = code;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '✅ Copiado';
+                setTimeout(() => btn.textContent = '📋 Copiar', 2000);
+            });
+        }
+
+        // ===== TOOLTIP NEURONAS =====
+        const tooltip = document.getElementById('neuronTooltip');
+        document.querySelectorAll('.neuron').forEach(neuron => {
+            neuron.addEventListener('mouseenter', (e) => {
+                const text = neuron.getAttribute('data-tooltip');
+                if (text) {
+                    tooltip.textContent = text;
+                    tooltip.classList.add('show');
+                }
+            });
+            neuron.addEventListener('mousemove', (e) => {
+                tooltip.style.left = (e.clientX + 15) + 'px';
+                tooltip.style.top = (e.clientY - 10) + 'px';
+            });
+            neuron.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('show');
+            });
+        });
+
+        // ===== SCROLL TO TOP =====
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scrollTop');
+            if (window.scrollY > 400) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+
+        // ===== NAVEGACIÓN ACTIVA =====
+        const sections = document.querySelectorAll('.section, .hero');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ===== ANIMACIONES DE ENTRADA =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+        // ===== ANIMACIÓN DE CONEXIONES =====
+        function animateConnections() {
+            const connections = document.querySelectorAll('.connection');
+            connections.forEach((conn, i) => {
+                conn.style.animation = `pulse-line ${1.5 + i * 0.2}s ease-in-out infinite`;
+            });
+        }
+
+        // Agregar animación CSS para las líneas
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse-line {
+                0%, 100% { stroke-opacity: 0.3; }
+                50% { stroke-opacity: 0.8; }
+            }
+            .connection {
+                animation: pulse-line 2s ease-in-out infinite;
+            }
+            .connection:nth-child(1) { animation-delay: 0s; }
+            .connection:nth-child(2) { animation-delay: 0.2s; }
+            .connection:nth-child(3) { animation-delay: 0.4s; }
+            .connection:nth-child(4) { animation-delay: 0.6s; }
+            .connection:nth-child(5) { animation-delay: 0.8s; }
+            .connection:nth-child(6) { animation-delay: 1.0s; }
+            .connection:nth-child(7) { animation-delay: 1.2s; }
+            .connection:nth-child(8) { animation-delay: 1.4s; }
+            .connection:nth-child(9) { animation-delay: 1.6s; }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>
